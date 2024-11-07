@@ -17,17 +17,15 @@ param_grid_decision_tree = {
 }
 
 param_grid_random_forest = {
-    'n_estimators': [10],
-    'max_depth': [10],
+    'n_estimators': [10, 300],
+    'max_depth': [20, 30],
     'bootstrap': [True],
 }
 
 param_grid_svm = {
-    'kernel': ['linear', 'rbf', 'sigmoid'],
-    'shrinking': [True, False],
-    'C': [0.1, 1, 10],
-    'tol': [1e-2, 1e-3, 1e-4,],
-    'gamma': ['scale', 'auto']
+    'kernel':['rbf', 'sigmoid'],
+    'shrinking': [True],
+    'C': [1, 10],
 }
 
 # Step 2: Initialize classifiers with random_state=0
@@ -36,23 +34,21 @@ random_forest = RandomForestClassifier(random_state=0) # TODO
 svm = SVC(random_state=0) # TODO
 
 # Step 3: Create a scorer using accuracy_score
-scorer =  make_scorer(accuracy_score) # TODO
+scorer =  "accuracy"  #make_scorer(accuracy_score) # TODO
 
 
 # Step 4: Perform grid search for each model using 9-fold StratifiedKFold cross-validation
 def perform_grid_search(model, X_train, y_train, params):
     print("Performing grid search for ", model)
     # Define the cross-validation strategy
-    strat_kfold = StratifiedKFold(n_splits=10, shuffle=True) # TODO
+    strat_kfold = StratifiedKFold(n_splits=10) # TODO
 
     # Grid search for the model 
-    grid_search = GridSearchCV(model, params, scoring='accuracy', cv=strat_kfold) # TODO scorer
+    grid_search = GridSearchCV(model, params, scoring=scorer, cv=strat_kfold ) # TODO scorer n_jobs=10
 
     # TODO fit to the data
 
-    if isinstance(model, RandomForestClassifier):
-        grid_search.fit(X_train, y_train.values.ravel())
-    elif isinstance(model, SVC):
+    if isinstance(model, RandomForestClassifier) or isinstance(model, SVC):
         grid_search.fit(X_train, y_train.values.ravel())
     else:
         grid_search.fit(X_train, y_train)
@@ -71,13 +67,13 @@ def perform_grid_search(model, X_train, y_train, params):
 # X_train_scaled, X_test_scaled = normalize_features(X_train, X_test)
 
 # # Do Grid search for Decision Tree
-# grid_decision_tree, best_params_decision_tree, best_score_decision_tree  = perform_grid_search(decision_tree, X_train, y_train, param_grid_decision_tree  ) # TODO
+# grid_decision_tree, best_params_decision_tree, best_score_decision_tree  = perform_grid_search(decision_tree, X_train_scaled, y_train, param_grid_decision_tree  ) # TODO
 
 # # Do Grid search for Random Forest
-# grid_random_forest, best_params_random_forest, best_score_random_forest  = perform_grid_search(random_forest, X_train, y_train, param_grid_random_forest) # TODO
+# grid_random_forest, best_params_random_forest, best_score_random_forest  = perform_grid_search(random_forest, X_train_scaled, y_train, param_grid_random_forest) # TODO
 
 # # Do Grid search for SVM
-# grid_svm, best_params_svm, best_score_svm = perform_grid_search(svm, X_train, y_train, param_grid_svm) # TODO
+# grid_svm, best_params_svm, best_score_svm = perform_grid_search(svm, X_train_scaled, y_train, param_grid_svm) # TODO
 
 
 
