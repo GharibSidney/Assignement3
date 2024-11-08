@@ -47,14 +47,14 @@ def train_model(model_name, X_train_scaled, y_train):
     '''
     if model_name == 'Decision Tree':
         # TODO call classifier here
-        cls = DecisionTreeClassifier() 
+        cls = DecisionTreeClassifier(random_state=0) 
         
     elif model_name == 'Random Forest':
         # TODO call classifier here
-        cls = RandomForestClassifier() 
+        cls = RandomForestClassifier(random_state=0) 
     elif model_name == 'SVM':
         # TODO call classifier here
-        cls = SVC()
+        cls = SVC(random_state=0)
 
     # TODO train the model
     cls.fit(X_train_scaled, y_train)
@@ -92,35 +92,7 @@ def eval_model(trained_models, X_train, X_test, y_train, y_test):
         y_test_pred = model.predict(X_test) # TODO predict y
 
         # Calculate accuracy
-        # train_accuracy = 0
-        # train_true_positive = 0
-        # train_true_negative = 0 
-        # train_false_positive = 0
-        # train_false_negative = 0
-
-        # for i in range (len(y_train_pred)):
-        #     if y_train_pred[i] == 1 and y_train[i] == 1:
-        #         train_true_positive += 1
-        #     elif y_train_pred[i] == 0 and y_train[i] == 0:
-        #         train_true_negative += 1
-        #     elif y_train_pred[i] == 1 and y_train[i] == 0:
-        #         train_false_positive += 1
-        #     elif y_train_pred[i] == 0 and y_train[i] == 1:
-        #         train_false_negative += 1
-        # precision = train_true_positive / (train_true_positive + train_false_positive)
-        # recall = train_true_positive / (train_true_positive + train_false_negative)
-        # train_accuracy =  train_accuracy / len(y_train_pred) 
         train_accuracy = accuracy_score(y_train, y_train_pred) # TODO find accuracy
-
-        # test_accuracy = 0
-        # test_true_positive = 0
-        # test_true_negative = 0 
-        # test_false_positive = 0
-        # test_false_negative = 0
-        # for i in range (len(y_train_pred)):
-        #     if y_train_pred[i] == y_train[i]:
-        #         test_accuracy += 1
-        # test_accuracy = test_accuracy / len(test_accuracy) 
         test_accuracy = accuracy_score(y_test, y_test_pred) #TODO find accuracy
 
         # Calculate F1-score
@@ -170,10 +142,10 @@ def report_model(y_train, y_test, y_train_pred_dict, y_test_pred_dict):
         print("Training Set Confusion Matrix:")
         # TODO write Confusion Matrix train
         print(confusion_matrix(y_train, y_train_pred))
-        cm_display_train = ConfusionMatrixDisplay(confusion_matrix(y_train, y_train_pred), display_labels=[0, 1])
-        cm_display_train.plot()
-        plt.title(f"Confusion Matrix of {model_name} for Training Set")
-        plt.show()
+        # cm_display_train = ConfusionMatrixDisplay(confusion_matrix(y_train, y_train_pred), display_labels=[0, 1])
+        # cm_display_train.plot()
+        # plt.title(f"Confusion Matrix of {model_name} for Training Set")
+        # plt.show()
 
         # Print classification report for testing set
         print("\nTesting Set Classification Report:")
@@ -184,10 +156,10 @@ def report_model(y_train, y_test, y_train_pred_dict, y_test_pred_dict):
         print("Testing Set Confusion Matrix:")
         # TODO write Confusion Matrix test
         print(confusion_matrix(y_test, y_test_pred))
-        cm_display_test = ConfusionMatrixDisplay(confusion_matrix(y_test, y_test_pred), display_labels=[0, 1])
-        cm_display_test.plot()
-        plt.title(f"Confusion Matrix of {model_name} for Testing Set")
-        plt.show()
+        # cm_display_test = ConfusionMatrixDisplay(confusion_matrix(y_test, y_test_pred), display_labels=[0, 1])
+        # cm_display_test.plot()
+        # plt.title(f"Confusion Matrix of {model_name} for Testing Set")
+        # plt.show()
 
 
 
